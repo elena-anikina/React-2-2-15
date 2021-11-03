@@ -1,0 +1,53 @@
+{
+  "env": { // где будет исполняться наш код
+    "browser": true,
+    "jest": true,
+    "es2021": true
+  },
+  /* Пресет с настройками. prettier должен быть последним.
+  Он удаляет некоторые правила eslint из-за которых могут возникать конфликты. */
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "eslint-config-prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "parser": "babel-eslint", // Парсер для обработки jsx кода
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11, // версия стандарта JavaScript. Последний 12 (2021).
+    "sourceType": "module" // Позволяет использовать import/export
+  },
+  // Здесь мы подключаем используемые плагины.
+  "plugins": ["react"],
+  /* Правила для отслеживания линтером. Если пресеты покрывают не все ситуации,
+  вы можете прописать нужные правила вручную. */
+  "rules": {
+    "curly": ["error"],
+    "max-depth": ["warn", 4],
+    "id-length": ["warn", { "exceptions": ["i", "j"], "min": 2 }],
+    "no-lonely-if": ["error"],
+    "no-plusplus": ["error", {"allowForLoopAfterthoughts": true}],
+    "no-restricted-syntax": "off",
+    "class-methods-use-this": "off",
+    "jsx-a11y/href-no-hash": ["off"],
+    "jsx-a11y/anchor-is-valid": ["off"],
+    "jsx-a11y/label-has-associated-control": [ "error", {
+      "assert": "either"
+    }],
+    "react/state-in-constructor": ["off"],
+    "react/jsx-props-no-spreading": ["off"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/static-property-placement": "off"
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  }
+}
