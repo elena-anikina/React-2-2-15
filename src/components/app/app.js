@@ -1,24 +1,23 @@
-import React from 'react';
-import { Col, Row } from 'antd';
-import Card from '../card/card';
+import React from 'react'
+import { Col, Row } from 'antd'
+import Card from '../card/card'
 
-import getMovies from '../../services/tmdb-api';
+import getMovies from '../../services/tmdb-api'
 
 export default class App extends React.Component {
   state = {
     data: [],
-  };
+  }
 
   constructor(props) {
     super(props);
-    this.updateMovies();
+    this.updateMovies()
   }
 
   updateMovies() {
     getMovies().then(
       (movies) => {
-        this.setState(() => {
-          /* eslint-disable-line */
+        this.setState(() => {           /* eslint-disable-line */
           return { data: JSON.parse(JSON.stringify(movies)) };
         });
       },
