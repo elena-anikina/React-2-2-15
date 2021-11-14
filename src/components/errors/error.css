@@ -1,0 +1,9 @@
+.internet-connection-error {
+  position: sticky;
+  text-align: left;
+  top: 0.5em;
+  z-index: 100;
+  width: 60%;
+  margin-bottom: 0.5em;
+}
+

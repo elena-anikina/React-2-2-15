@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './card.css';
 import { Typography } from 'antd';
 import { format } from 'date-fns';
+import getShortText from '../../services/get-short-text-func';
 
 const { Text } = Typography;
 
@@ -14,28 +16,17 @@ const Card = (props) => {
     release_date: releaseDate,
   } = props.movie; /* eslint-disable-line */
 
-  const getShortText = (string, maxLen) => {
-    let newString = string.split(' ').slice(0, maxLen);
-    for (let i = newString.length - 1; i > Math.floor(maxLen / 2); i--) {
-      if (newString[i].endsWith('.') || newString[i].endsWith(',')) {
-        newString = newString.slice(0, i + 1);
-      }
-    }
-    newString = newString.join(' ');
-    if (newString.endsWith(',') || newString.endsWith('.')) {
-      newString = `${newString.slice(0, -1)}.`;
-    } else {
-      newString += '.';
-    }
-    return newString;
-  };
+  const posterUrl = `https://www.themoviedb.org/t/p/w220_and_h330_face${posterPath}`;
+  const posterImg = posterPath ? <img src={posterUrl} alt="poster" className="poster" /> : null;
+
+  const renderDate =  releaseDate ? format(new Date(releaseDate), 'MMMM d, yyyy') : null;
 
   return (
     <div className="card">
-      <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face${posterPath}`} alt="poster" className="poster" />
+      {posterImg}
       <div className="card-text">
         <h5 className="card-text-headline">{originalTitle}</h5>
-        <p className="card-text-date">{format(new Date(releaseDate), 'MMMM d, yyyy')}</p>
+        <p className="card-text-date">{renderDate}</p>
         <p>
           <Text code>Action</Text>
           <Text code>Drama</Text>
