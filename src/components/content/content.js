@@ -1,37 +1,55 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import './content.css';
-import {Row} from "antd";
-import NoInternetConnectionError from "../errors/no-internet-connection-error";
-import Error from "../errors/error";
-import Spinner from "../spinner/spinner";
-import CardsAll from "../cards-all/cards-all";
+
+import { Row, Tabs } from 'antd';
+import NoInternetConnectionError from '../errors/no-internet-connection-error';
+import Error from '../errors/error';
+import Spinner from '../spinner/spinner';
+import CardsAll from '../cards-all/cards-all';
 import InputSearch from '../input/input';
-import Pagination_ from "../pagination/pagination";
+import PaginationNav from '../pagination/pagination';
+import RatedMovies from '../ratedMovies/ratedMovies';
 
+const { TabPane } = Tabs;
 
+const Content = ({ appState, inputChange, paginationChange, getRatedMovies }) => (
+  <div className="main">
+    <Tabs defaultActiveKey="1" centered onChange={getRatedMovies}>
+      <TabPane tab="Search" key="1">
+        <InputSearch dataFromApp={appState} inputChange={inputChange} />
+        <Row gutter={[16, 16]} justify="center">
+          <Spinner dataFromApp={appState} />
+          <NoInternetConnectionError dataFromApp={appState} />
+          <Error dataFromApp={appState} />
+          <CardsAll dataFromApp={appState} getRatedMovies={getRatedMovies} />
+          <PaginationNav dataFromApp={appState} paginationChange={paginationChange} />
+        </Row>
+      </TabPane>
 
-
-const Content = ({dataFromApp, inputChange, paginationChange}) => {
-    const {inputValue, data, loading, error, errorDetails, internetConnection, minValue, maxValue} = dataFromApp;
-    const noInternetConnectionError = !internetConnection ? <NoInternetConnectionError /> : null;
-    const errorMessage = error ? <Error errorDetails={errorDetails} /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const input = !(loading || error) ? <InputSearch inputChange={inputChange} inputValue={inputValue} /> : null;
-    const content = !(loading || error) ? <CardsAll data={data} minValue={minValue} maxValue={maxValue} /> : null;
-    const pagination = !(loading || error) && (data.length > 6) ? <Pagination_ dataFromApp={dataFromApp} paginationChange={paginationChange} /> : null;
-
-    return (
-        <div className="main">
-            <Row gutter={[16, 16]} justify="center">
-                {spinner}
-                {noInternetConnectionError}
-                {errorMessage}
-                {input}
-                {content}
-                {pagination}
-            </Row>
-        </div>
-    );
-};
+      <TabPane tab="Rated" key="2">
+        <Row gutter={[16, 16]} justify="space-between">
+          <Spinner dataFromApp={appState} />
+          <RatedMovies dataFromApp={appState} getRatedMovies={getRatedMovies} />
+        </Row>
+      </TabPane>
+    </Tabs>
+  </div>
+);
 
 export default Content;
+
+Content.defaultProps = {
+  appState: {},
+  inputChange: () => {},
+  paginationChange: () => {},
+  getRatedMovies: () => {},
+};
+
+Content.propTypes = {
+  appState: PropTypes.instanceOf(Object),
+  inputChange: PropTypes.func,
+  paginationChange: PropTypes.func,
+  getRatedMovies: PropTypes.func,
+};

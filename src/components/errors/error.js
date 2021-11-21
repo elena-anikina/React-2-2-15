@@ -4,19 +4,23 @@ import PropTypes from 'prop-types';
 import './error.css';
 import { Alert } from 'antd';
 
-const Error = ({ errorDetails }) => {
+const Error = ({ dataFromApp }) => {
+  const { error } = dataFromApp;
+
+  if (!error) return null;
   const errorText = `BOOM! Something has gone wrong.
-                       We will try to fix it as soon as possible.
-                       The response status is ${errorDetails}.`;
+                       We will try to fix it as soon as possible.`;
   return <Alert message="Error" description={errorText} type="error" showIcon className="error" />;
 };
 
 export default Error;
 
 Error.defaultProps = {
-  errorDetails: 'response status',
+  dataFromApp: {
+    error: false,
+  },
 };
 
 Error.propTypes = {
-  errorDetails: PropTypes.string,
+  dataFromApp: PropTypes.instanceOf(Object),
 };

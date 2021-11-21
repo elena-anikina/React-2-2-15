@@ -1,0 +1,28 @@
+.icon-circle-rating {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  position: relative;
+  right: 0px;
+  top: 0px;
+  justify-content: center;
+}
+
+.rating {
+  display: flex;
+  position: absolute;
+  align-self: center;
+}
+
+.icon-circle-rating .icon-circle {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  margin: auto auto;
+}
+
+.icon-rating {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+}

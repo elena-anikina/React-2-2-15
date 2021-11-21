@@ -1,19 +1,25 @@
 import React from 'react';
 import './pagination.css';
-import {Pagination} from "antd";
+import { Pagination } from 'antd';
 
-const Pagination_ = ({dataFromApp, paginationChange}) => {
+const PaginationNav = ({ dataFromApp, paginationChange }) => {
+  const { data, totalResults, currentPage, loading, error } = dataFromApp;
 
-    const {data, totalResults, currentPage} =  dataFromApp;
+  if (loading || error || data.length < 6) {
+    return null;
+  }
 
-    const pagination = <Pagination
-                defaultCurrent={currentPage}
-                defaultPageSize={6}
-                onChange={paginationChange}
-                total={totalResults}
-                showSizeChanger={false} />;
+  const pagination = (
+    <Pagination
+      defaultCurrent={currentPage}
+      defaultPageSize={6}
+      onChange={paginationChange}
+      total={totalResults}
+      showSizeChanger={false}
+    />
+  );
 
-    return (data.length > 6) ? pagination : null;
+  return data.length > 6 ? pagination : null;
 };
 
-export default Pagination_;
+export default PaginationNav;

@@ -1,6 +1,16 @@
 .main .ant-input {
-    width: 100%;
-    box-sizing: border-box;
-    margin-left: 8px;
-    margin-right: 8px;
+  width: 99%;
+  box-sizing: border-box;
+}
+
+.pagination-rated {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.spinner-rated {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

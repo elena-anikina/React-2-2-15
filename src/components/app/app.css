@@ -6,3 +6,11 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.ant-tabs-content {
+  flex-direction: column;
+}
+
+.ant-tabs {
+  width: 100%;
+}
