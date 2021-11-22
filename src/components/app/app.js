@@ -5,6 +5,7 @@ import './app.css';
 
 import { debounce } from 'lodash';
 import Content from '../content/content';
+import Error from '../errors/error';
 import TmdbApi from '../../services/tmdb-api';
 import { TmdbServiceProvider } from '../tmdb-context/tmdb-context';
 
@@ -17,6 +18,7 @@ export default class App extends React.Component {
     totalResults: 0,
     loading: true,
     error: false,
+    errorTab2: false,
     internetConnection: true,
     minValue: 0,
     maxValue: 6,
@@ -48,6 +50,10 @@ export default class App extends React.Component {
     }
   }
 
+  componentDidCatch() {
+    this.setState({ error: true });
+  }
+
   componentWillUnmount() {
     clearInterval(this.timerId);
   }
@@ -71,7 +77,7 @@ export default class App extends React.Component {
           }));
         },
         (error) => {
-          this.setState(() => ({ loading: false, error: true }));
+          this.setState(() => ({ loading: false, errorTab2: true }));
         }
       );
     }
@@ -137,7 +143,12 @@ export default class App extends React.Component {
       this.setState({ loading: true, ratedMovies: [] });
       await this.tmdbApi
         .getRatedMovies(guestSessionId)
-        .then((body) => body.results)
+        .then(
+          (body) => body.results,
+          (error) => {
+            this.setState({ loading: false, errorTab2: true });
+          }
+        )
         .then((ratedMovies) => {
           this.setState({ ratedMovies, loading: false });
         });
@@ -145,7 +156,11 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { genres } = this.state;
+    const { error, genres } = this.state;
+    if (error) {
+      return <Error />;
+    }
+
     return (
       <TmdbServiceProvider value={genres}>
         <Content

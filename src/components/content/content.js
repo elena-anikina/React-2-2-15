@@ -14,29 +14,37 @@ import RatedMovies from '../ratedMovies/ratedMovies';
 
 const { TabPane } = Tabs;
 
-const Content = ({ appState, inputChange, paginationChange, getRatedMovies }) => (
-  <div className="main">
-    <Tabs defaultActiveKey="1" centered onChange={getRatedMovies}>
-      <TabPane tab="Search" key="1">
-        <InputSearch dataFromApp={appState} inputChange={inputChange} />
-        <Row gutter={[16, 16]} justify="center">
-          <Spinner dataFromApp={appState} />
-          <NoInternetConnectionError dataFromApp={appState} />
-          <Error dataFromApp={appState} />
-          <CardsAll dataFromApp={appState} getRatedMovies={getRatedMovies} />
-          <PaginationNav dataFromApp={appState} paginationChange={paginationChange} />
-        </Row>
-      </TabPane>
+const Content = ({ appState, inputChange, paginationChange, getRatedMovies }) => {
+  const { error } = appState;
 
-      <TabPane tab="Rated" key="2">
-        <Row gutter={[16, 16]} justify="space-between">
-          <Spinner dataFromApp={appState} />
-          <RatedMovies dataFromApp={appState} getRatedMovies={getRatedMovies} />
-        </Row>
-      </TabPane>
-    </Tabs>
-  </div>
-);
+  if (error) {
+    return <Error />;
+  }
+
+  return (
+    <div className="main">
+      <NoInternetConnectionError dataFromApp={appState} />
+
+      <Tabs defaultActiveKey="1" centered onChange={getRatedMovies}>
+        <TabPane tab="Search" key="1">
+          <InputSearch dataFromApp={appState} inputChange={inputChange} />
+          <Row gutter={[16, 16]} justify="center">
+            <Spinner dataFromApp={appState} />
+            <CardsAll dataFromApp={appState} getRatedMovies={getRatedMovies} />
+            <PaginationNav dataFromApp={appState} paginationChange={paginationChange} />
+          </Row>
+        </TabPane>
+
+        <TabPane tab="Rated" key="2">
+          <Row gutter={[16, 16]} justify="space-between">
+            <Spinner dataFromApp={appState} />
+            <RatedMovies dataFromApp={appState} getRatedMovies={getRatedMovies} />
+          </Row>
+        </TabPane>
+      </Tabs>
+    </div>
+  );
+};
 
 export default Content;
 

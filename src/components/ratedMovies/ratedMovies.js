@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 
 import { Col } from 'antd';
 import Card from '../card/card';
+import Error from '../errors/error';
 
 export default class RatedMovies extends React.Component {
   render() {
     const { dataFromApp, getRatedMovies } = this.props;
-    const { ratedMovies, guestSessionId, loading } = dataFromApp;
+    const { ratedMovies, guestSessionId, loading, errorTab2 } = dataFromApp;
+
+    if (errorTab2) {
+      return <Error />;
+    }
 
     if (ratedMovies.length === 0 && !loading) {
       return <Col span={24}>No movies rated.</Col>;

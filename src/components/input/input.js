@@ -6,11 +6,7 @@ import './input.css';
 import { Input } from 'antd';
 
 const InputSearch = ({ dataFromApp, inputChange }) => {
-  const { inputValue, error } = dataFromApp;
-
-  if (error) {
-    return null;
-  }
+  const { inputValue } = dataFromApp;
 
   return (
     <Input placeholder="Type to search..." value={inputValue} onChange={inputChange} autoFocus className="input" />

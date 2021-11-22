@@ -1,8 +1,18 @@
 .internet-connection-error {
-  position: sticky;
+  position: absolute;
   text-align: left;
-  top: 0.5em;
+  top: 0.8em;
   z-index: 100;
-  width: 60%;
+  width: 500px;
   margin-bottom: 0.5em;
+}
+
+.ant-alert.ant-alert-error {
+  position: flex;
+  text-align: left;
+  top: 0.8em;
+  z-index: 100;
+  width: 500px;
+  left: calc(50% - 250px);
+  margin-bottom: 20px;
 }
