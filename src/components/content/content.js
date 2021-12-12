@@ -28,7 +28,7 @@ const Content = ({ appState, inputChange, paginationChange, getRatedMovies }) =>
       <Tabs defaultActiveKey="1" centered onChange={getRatedMovies}>
         <TabPane tab="Search" key="1">
           <InputSearch dataFromApp={appState} inputChange={inputChange} />
-          <Row gutter={[16, 16]} justify="center">
+          <Row gutter={[16, 16]} justify="space-between">
             <Spinner dataFromApp={appState} />
             <CardsAll dataFromApp={appState} getRatedMovies={getRatedMovies} />
             <PaginationNav dataFromApp={appState} paginationChange={paginationChange} />

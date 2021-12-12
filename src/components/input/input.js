@@ -9,7 +9,9 @@ const InputSearch = ({ dataFromApp, inputChange }) => {
   const { inputValue } = dataFromApp;
 
   return (
-    <Input placeholder="Type to search..." value={inputValue} onChange={inputChange} autoFocus className="input" />
+    <div className="input-box">
+      <Input placeholder="Type to search..." value={inputValue} onChange={inputChange} autoFocus className="input" />
+    </div>
   );
 };
 

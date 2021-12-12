@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 
 import './app.css';
@@ -138,6 +137,7 @@ export default class App extends React.Component {
   };
 
   getRatedMovies = async (activeKey) => {
+    console.log('функция getRatedMovies()');
     if (activeKey === '2') {
       const { guestSessionId } = this.state;
       this.setState({ loading: true, ratedMovies: [] });
@@ -150,6 +150,7 @@ export default class App extends React.Component {
           }
         )
         .then((ratedMovies) => {
+          console.log(ratedMovies);
           this.setState({ ratedMovies, loading: false });
         });
     }

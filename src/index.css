@@ -9,7 +9,7 @@ html body {
   height: 100vh;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) {
   /* Уменьшенный объем текста, 1 колонка */
 }
 

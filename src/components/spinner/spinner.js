@@ -13,7 +13,7 @@ const Spinner = ({ dataFromApp }) => {
   const antIcon = <LoadingOutlined style={{ fontSize: '5em' }} spin />;
   return (
     <div className="spinner-rated">
-      <Spin indicator={antIcon} className="spinner" />;
+      <Spin indicator={antIcon} className="spinner" />
     </div>
   );
 };

@@ -8,28 +8,40 @@ import { format } from 'date-fns';
 import RatingInCircle from '../raringInCircle/rating-in-circle';
 import Genres from '../genres/genres';
 import TmdbApi from '../../services/tmdb-api';
-import getShortText from '../../services/get-short-text-func';
+import getShortText from '../../helper/get-short-text-func';
+import noPoster from '../../helper/no-poster.jpg';
 
 export default class Card extends React.Component {
   tmdbApi = new TmdbApi();
 
   state = {
     rating: 0,
+    isRated: null,
   };
 
   componentDidMount() {
+    const { isRated } = this.props;
+    this.setState({ isRated });
     this.checkRatedMoviesArr();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { rating } = this.state;
+    const { rating, isRated } = this.state;
 
     if (rating !== prevState.rating && rating > 0) {
       this.rateMovie();
     }
 
-    if (rating !== prevState.rating && rating === 0) {
+    if (rating !== prevState.rating && rating === 0 && isRated === false) {
       this.deleteRating();
+    }
+
+    if (rating !== prevState.rating && rating === 0 && isRated === true) {
+      const { getRatedMovies } = this.props;
+
+      this.deleteRating().then(() => {
+        getRatedMovies('2');
+      });
     }
   }
 
@@ -69,7 +81,7 @@ export default class Card extends React.Component {
   };
 
   render() {
-    const { isRated, movie } = this.props;
+    const { movie } = this.props;
     const {
       original_title: originalTitle,
       overview,
@@ -79,15 +91,18 @@ export default class Card extends React.Component {
     } = movie;
     const { rating } = this.state;
 
-    const posterUrl = `https://www.themoviedb.org/t/p/w220_and_h330_face${posterPath}`;
-    const posterImg = posterPath ? <img src={posterUrl} alt="poster" className="poster" /> : null;
+    const posterImg = (
+      <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face${posterPath}`} className="poster" alt="poster" />
+    );
+    const noPosterImg = <img src={noPoster} className="poster" alt="poster" />;
+    const poster = posterPath ? posterImg : noPosterImg;
 
     const renderDate = releaseDate ? format(new Date(releaseDate), 'MMMM d, yyyy') : null;
-    const stars = !isRated ? <Rate count={10} allowHalf onChange={this.onChangeRate} value={rating} /> : null;
+    const stars = <Rate count={10} allowHalf onChange={this.onChangeRate} value={rating} />;
 
     return (
       <div className="card">
-        {posterImg}
+        {poster}
         <div className="card-text">
           <h5 className="card-text-headline">{originalTitle}</h5>
           <p className="card-text-date">{renderDate}</p>
@@ -114,6 +129,7 @@ Card.defaultProps = {
 };
 
 Card.propTypes = {
+  getRatedMovies: PropTypes.func.isRequired,
   movie: PropTypes.instanceOf(Object),
   guestSessionId: PropTypes.string,
   ratedMovies: PropTypes.instanceOf(Array),
